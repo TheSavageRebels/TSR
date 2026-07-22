@@ -1,0 +1,466 @@
+/* =================================================================
+   TOKENS — palette, typographie, rythme
+   Palette : noir mat, blanc cassé, rouge sang, gris acier.
+================================================================= */
+:root {
+  --c-black: #0a0908;
+  --c-black-soft: #131110;
+  --c-white: #ede7e3;
+  --c-red: #c81d25;      /* rouge sang principal */
+  --c-red-dark: #7a0f14;
+  --c-steel: #4a4744;
+
+  --font-display: 'Anton', sans-serif;   /* typo agressive, condensée */
+  --font-body: 'Oswald', sans-serif;
+
+  --section-pad: clamp(4rem, 10vw, 8rem);
+}
+
+/* =================================================================
+   RESET DE BASE
+================================================================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; } /* filet de sécurité, le JS gère aussi le smooth scroll */
+
+body {
+  background: var(--c-black);
+  color: var(--c-white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Focus clavier visible, accessibilité */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--c-red);
+  outline-offset: 3px;
+}
+
+/* =================================================================
+   NAVIGATION FIXE
+================================================================= */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem clamp(1.5rem, 5vw, 4rem);
+  mix-blend-mode: difference; /* le logo/liens s'inversent sur fond clair ou sombre */
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+  color: var(--c-white);
+}
+.nav-logo span { color: var(--c-red); }
+
+.nav-links {
+  display: flex;
+  gap: clamp(1.2rem, 3vw, 2.5rem);
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -6px;
+  width: 0; height: 2px;
+  background: var(--c-red);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover::after { width: 100%; }
+
+/* =================================================================
+   HERO — VIDEO PLEIN ECRAN
+================================================================= */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-video {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 100%; height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;   /* la vidéo couvre tout l'écran sans être déformée */
+  z-index: 1;
+}
+
+/* Calque noir semi-transparent pour la lisibilité du texte */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 9, 8, 0.55); /* opacité ~55% */
+  z-index: 2;
+}
+
+/* Texture de grain subtile façon pochette d'album abîmée */
+.hero-noise {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 2px, rgba(255,255,255,0.4) 2px 3px);
+  mix-blend-mode: overlay;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 4;
+  text-align: center;
+  padding: 0 1.5rem;
+  animation: heroReveal 1.1s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-size: 0.8rem;
+  color: var(--c-red);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* Titre principal : typographie agressive + effet glitch discret au chargement */
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 12vw, 8.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--c-white);
+  position: relative;
+  text-shadow: 0 0 40px rgba(200, 29, 37, 0.35);
+}
+
+.hero-subtitle {
+  margin-top: 1.2rem;
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  color: var(--c-steel);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* =================================================================
+   BOUTON CTA — "Découvrir le groupe"
+================================================================= */
+.cta-btn {
+  position: relative;
+  margin-top: 3rem;
+  padding: 1.1rem 3rem;
+  background: transparent;
+  border: 2px solid var(--c-white);
+  color: var(--c-white);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+}
+
+/* Remplissage rouge sang qui monte depuis le bas au survol */
+.cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--c-red);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: 0;
+}
+
+.cta-text, .cta-glitch { position: relative; z-index: 1; }
+
+/* Calque de texte glitché, caché par défaut */
+.cta-glitch {
+  position: absolute;
+  top: 50%; left: 0; width: 100%;
+  transform: translateY(-50%);
+  color: var(--c-red);
+  opacity: 0;
+  clip-path: inset(0 0 0 0);
+}
+
+.cta-btn:hover {
+  border-color: var(--c-red);
+  box-shadow: 0 0 25px rgba(200, 29, 37, 0.55), 0 0 60px rgba(200, 29, 37, 0.25);
+}
+.cta-btn:hover::before { transform: scaleY(1); }
+
+.cta-btn:active { transform: scale(0.97); }
+
+/* Effet glitch déclenché au survol via classe JS "is-glitching" */
+.cta-btn.is-glitching .cta-glitch {
+  opacity: 0.8;
+  animation: glitchShift 0.4s steps(2, end) infinite;
+}
+
+@keyframes glitchShift {
+  0%   { clip-path: inset(10% 0 70% 0); transform: translate(-3px, -50%); }
+  25%  { clip-path: inset(60% 0 5% 0);  transform: translate(3px, -50%); }
+  50%  { clip-path: inset(30% 0 40% 0); transform: translate(-2px, -50%); }
+  75%  { clip-path: inset(75% 0 10% 0); transform: translate(2px, -50%); }
+  100% { clip-path: inset(15% 0 60% 0); transform: translate(0, -50%); }
+}
+
+/* Indicateur de scroll animé en bas du hero */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  width: 26px; height: 42px;
+  border: 2px solid var(--c-white);
+  border-radius: 20px;
+}
+.scroll-indicator span {
+  position: absolute;
+  top: 6px; left: 50%;
+  width: 4px; height: 8px;
+  margin-left: -2px;
+  background: var(--c-red);
+  border-radius: 2px;
+  animation: scrollDot 1.6s ease-in-out infinite;
+}
+@keyframes scrollDot {
+  0%   { top: 6px; opacity: 1; }
+  60%  { top: 22px; opacity: 0.3; }
+  100% { top: 6px; opacity: 1; }
+}
+
+/* =================================================================
+   TITRES DE SECTION (réutilisés pour "À propos" et "Galerie")
+================================================================= */
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  padding: 0 clamp(1.5rem, 6vw, 5rem);
+}
+.section-index {
+  font-family: var(--font-display);
+  color: var(--c-red);
+  font-size: 1.4rem;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Animation de révélation au scroll (classe ajoutée par le JS via IntersectionObserver) */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =================================================================
+   SECTION A PROPOS
+================================================================= */
+.about {
+  padding: var(--section-pad) 0;
+  background: var(--c-black);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.about-text {
+  max-width: 780px;
+  margin: 0 auto 4rem;
+  padding: 0 clamp(1.5rem, 6vw, 5rem);
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.8;
+  color: #cfc9c4;
+  font-weight: 300;
+}
+
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;                       /* fines lignes de séparation type grille de fanzine */
+  background: rgba(255,255,255,0.08);
+}
+
+.member-card {
+  background: var(--c-black);
+  padding: 1.5rem 1.2rem 2rem;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+.member-card:hover { background: var(--c-black-soft); }
+
+.member-photo {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  margin-bottom: 1.2rem;
+  filter: grayscale(1) contrast(1.1);
+  transition: filter 0.4s ease;
+}
+.member-card:hover .member-photo { filter: grayscale(0) contrast(1.05); }
+
+.member-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.member-role {
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--c-red);
+}
+
+/* =================================================================
+   SECTION GALERIE / LIVE
+================================================================= */
+.gallery {
+  padding: var(--section-pad) 0;
+  background: var(--c-black-soft);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  cursor: pointer;
+}
+.gallery-item img {
+  filter: grayscale(0.3) contrast(1.1) brightness(0.85);
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), filter 0.5s ease;
+}
+.gallery-item::after {
+  content: '';
+  position: absolute; inset: 0;
+  border: 2px solid var(--c-red);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.gallery-item:hover img {
+  transform: scale(1.08);
+  filter: grayscale(0) contrast(1.15) brightness(1);
+}
+.gallery-item:hover::after { opacity: 1; }
+
+/* =================================================================
+   FOOTER
+================================================================= */
+.site-footer {
+  padding: 4rem clamp(1.5rem, 6vw, 5rem) 2.5rem;
+  background: var(--c-black);
+  border-top: 3px solid var(--c-red);
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+}
+.footer-logo span { color: var(--c-red); }
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  list-style: none;
+  margin-bottom: 2.5rem;
+}
+.social-links a {
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 4px;
+}
+.social-links a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 2px;
+  background: var(--c-red);
+  transition: width 0.3s ease;
+}
+.social-links a:hover::after { width: 100%; }
+.social-links a:hover { color: var(--c-red); }
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--c-steel);
+  letter-spacing: 0.05em;
+}
+
+/* =================================================================
+   RESPONSIVE
+================================================================= */
+@media (max-width: 900px) {
+  .members-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .nav-links { display: none; } /* menu simplifié sur mobile, extensible en burger si besoin */
+  .members-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .cta-btn { padding: 1rem 2.2rem; font-size: 0.9rem; }
+}
+
+/* Respect de la préférence utilisateur pour moins d'animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

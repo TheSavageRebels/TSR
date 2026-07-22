@@ -1,101 +1,160 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Savage Rebels</title>
-
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #111, #3b0000);
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-
-        .box {
-            background: rgba(0,0,0,0.7);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 0 30px red;
-            max-width: 600px;
-        }
-
-        h1 {
-            font-size: 45px;
-            color: #ff3333;
-            text-shadow: 0 0 15px red;
-        }
-
-        p {
-            font-size: 22px;
-        }
-
-        img {
-            width: 250px;
-            border-radius: 15px;
-            margin: 15px;
-        }
-
-        .small {
-            font-size: 16px;
-            color: #ccc;
-        }
-
-        button {
-            background: red;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        button:hover {
-            background: darkred;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOID REQUIEM — Site officiel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="box">
+  <!-- ============================================= -->
+  <!-- NAVIGATION FIXE                                -->
+  <!-- ============================================= -->
+  <header class="site-nav">
+    <div class="nav-logo">VOID<span>REQUIEM</span></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#about">Le Groupe</a></li>
+        <li><a href="#gallery">Live</a></li>
+        <li><a href="#footer">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <h1> The Savage Rebels </h1>
+  <!-- ============================================= -->
+  <!-- HERO SECTION : VIDEO PLEIN ECRAN               -->
+  <!-- ============================================= -->
+  <section class="hero" id="hero">
 
-    <p>
-         Le site est actuellement en cours de création 
-    </p>
+    <!-- Vidéo de fond en autoplay/loop/muted, adaptée à l'écran via object-fit -->
+    <video class="hero-video" autoplay loop muted playsinline>
+      <source src="vid.mp4" type="video/mp4">
+    </video>
 
-    <p>
-        mdrrrr hehe <br>
-        Si vous voulez voir ce que ça donne...
-        <br>
-        attendez un petit peu svp 
-    </p>
+    <!-- Calque sombre semi-transparent pour la lisibilité du contenu -->
+    <div class="hero-overlay"></div>
 
-    <!-- GIF rigolo -->
-    <img src="https://media.tenor.com/3Z0zWQxZ0VIAAAAC/loading.gif">
+    <!-- Texture de grain/rayures pour renforcer l'esthétique brute -->
+    <div class="hero-noise"></div>
 
-    <p class="small">
-        Nos petits gens travaillent dans l'ombre... 
-    </p>
+    <!-- Contenu central du Hero -->
+    <div class="hero-content">
+      <p class="hero-eyebrow">Groupe de Metal / Denain, FR</p>
+      <h1 class="hero-title" data-text="VOID REQUIEM">VOID REQUIEM</h1>
+      <p class="hero-subtitle">Nouvel album « Cendres &amp; Silence » — en tournée maintenant</p>
 
-    <img src="https://media.tenor.com/2roX3uxz_68AAAAC/cat-coding.gif">
+      <!-- Bouton CTA : scroll fluide vers la section suivante -->
+      <button class="cta-btn" id="discoverBtn">
+        <span class="cta-text">Découvrir le groupe</span>
+        <span class="cta-glitch" aria-hidden="true">Découvrir le groupe</span>
+      </button>
+    </div>
 
-    <br>
+    <!-- Indicateur de scroll animé -->
+    <div class="scroll-indicator" aria-hidden="true">
+      <span></span>
+    </div>
+  </section>
 
-    <button onclick="alert('Patience petit renard (jsp pourquoi je met ça)  Le site arrive bientôt !')">
-        Cliquer ici 👀
-    </button>
+  <!-- ============================================= -->
+  <!-- SECTION A PROPOS : HISTOIRE + MEMBRES          -->
+  <!-- ============================================= -->
+  <section class="about" id="about">
+    <div class="section-header">
+      <span class="section-index">I.</span>
+      <h2 class="section-title">L'HISTOIRE</h2>
+    </div>
 
-</div>
+    <div class="about-content">
+      <p class="about-text">
+        Formé en 2016 dans les entrepôts désaffectés des Hauts-de-France, VOID REQUIEM
+        est né d'une rage collective et d'un besoin viscéral de bruit. Entre riffs
+        saturés, growls et mélodies sombres, le groupe a forgé un son qui lui appartient :
+        brutal, cinématographique, sans compromis. Trois albums plus tard et des centaines
+        de scènes parcourues, VOID REQUIEM continue de creuser le même sillon —
+        celui de l'obscurité qui libère.
+      </p>
+    </div>
 
+    <!-- Grille des membres du groupe -->
+    <div class="members-grid">
+
+      <article class="member-card">
+        <div class="member-photo">
+          <!-- Remplacer par la vraie photo du membre -->
+          <img src="membre-1.jpg" alt="Portrait du chanteur">
+        </div>
+        <h3 class="member-name">Kaïn Roth</h3>
+        <p class="member-role">Chant</p>
+      </article>
+
+      <article class="member-card">
+        <div class="member-photo">
+          <img src="membre-2.jpg" alt="Portrait du guitariste">
+        </div>
+        <h3 class="member-name">Elias Vane</h3>
+        <p class="member-role">Guitare lead</p>
+      </article>
+
+      <article class="member-card">
+        <div class="member-photo">
+          <img src="membre-3.jpg" alt="Portrait du bassiste">
+        </div>
+        <h3 class="member-name">Marek Solt</h3>
+        <p class="member-role">Basse</p>
+      </article>
+
+      <article class="member-card">
+        <div class="member-photo">
+          <img src="membre-4.jpg" alt="Portrait du batteur">
+        </div>
+        <h3 class="member-name">Nyla Kross</h3>
+        <p class="member-role">Batterie</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- SECTION GALERIE / LIVE                         -->
+  <!-- ============================================= -->
+  <section class="gallery" id="gallery">
+    <div class="section-header">
+      <span class="section-index">II.</span>
+      <h2 class="section-title">LIVE &amp; GALERIE</h2>
+    </div>
+
+    <!-- Grille de photos de concerts. Remplacer les src par vos vraies photos -->
+    <div class="gallery-grid">
+      <figure class="gallery-item"><img src="live-1.jpg" alt="Concert - vue de la scène"></figure>
+      <figure class="gallery-item"><img src="live-2.jpg" alt="Concert - public en fusion"></figure>
+      <figure class="gallery-item"><img src="live-3.jpg" alt="Concert - jeux de lumière"></figure>
+      <figure class="gallery-item"><img src="live-4.jpg" alt="Concert - chanteur en action"></figure>
+      <figure class="gallery-item"><img src="live-5.jpg" alt="Concert - guitariste au premier plan"></figure>
+      <figure class="gallery-item"><img src="live-6.jpg" alt="Concert - vue d'ensemble de la salle"></figure>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- FOOTER                                         -->
+  <!-- ============================================= -->
+  <footer class="site-footer" id="footer">
+    <div class="footer-logo">VOID<span>REQUIEM</span></div>
+
+    <ul class="social-links">
+      <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a></li>
+      <li><a href="https://youtube.com" target="_blank" rel="noopener">YouTube</a></li>
+      <li><a href="https://open.spotify.com" target="_blank" rel="noopener">Spotify</a></li>
+      <li><a href="https://bandcamp.com" target="_blank" rel="noopener">Bandcamp</a></li>
+    </ul>
+
+    <p class="footer-copy">&copy; 2026 VOID REQUIEM. Tous droits réservés.</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
