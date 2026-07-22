@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SVLMQTZCJY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-SVLMQTZCJY');
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>THE SAVAGE REBELS — Site officiel</title>
+
+  <!-- ============================================= -->
+  <!-- PWA : manifest + icônes + couleur de thème     -->
+  <!-- ============================================= -->
+  <link rel="manifest" href="PWA/manifest.json">
+  <link rel="icon" type="image/png" href="img/logo.png">
+  <link rel="apple-touch-icon" href="img/logo.png">
+  <meta name="theme-color" content="#0a0908">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
@@ -73,12 +73,14 @@ button:focus-visible {
 }
 
 .nav-logo {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  letter-spacing: 0.05em;
-  color: var(--c-white);
+  display: flex;
+  align-items: center;
 }
-.nav-logo span { color: var(--c-red); }
+.nav-logo-img {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+}
 
 .nav-links {
   display: flex;
@@ -434,12 +436,15 @@ button:focus-visible {
 }
 
 .footer-logo {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  letter-spacing: 0.05em;
+  display: flex;
+  justify-content: center;
   margin-bottom: 2rem;
 }
-.footer-logo span { color: var(--c-red); }
+.footer-logo-img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+}
 
 .social-links {
   display: flex;
@@ -507,7 +512,9 @@ button:focus-visible {
   <!-- NAVIGATION FIXE                                -->
   <!-- ============================================= -->
   <header class="site-nav">
-    <div class="nav-logo">THE SAVAGE<span>REBELS</span></div>
+    <div class="nav-logo">
+      <img src="img/logo.png" alt="Logo THE SAVAGE REBELS" class="nav-logo-img">
+    </div>
     <nav>
       <ul class="nav-links">
         <li><a href="#about">Le Groupe</a></li>
@@ -580,31 +587,31 @@ button:focus-visible {
           <!-- Remplacer par la vraie photo du membre. data-src = chargement différé (lazy load) -->
           <img class="lazy-img" data-src="membre-1.jpg" alt="Portrait du chanteur">
         </div>
-        <h3 class="member-name">Kaïn Roth</h3>
+        <h3 class="member-name">Nom du chanteur</h3>
         <p class="member-role">Chant</p>
       </article>
 
       <article class="member-card">
         <div class="member-photo">
-          <img class="lazy-img" data-src="membre-2.jpg" alt="Portrait du guitariste">
+          <img class="lazy-img" data-src="membre-2.jpg" alt="Portrait du guitariste Deshayes Quentin">
         </div>
-        <h3 class="member-name">Elias Vane</h3>
-        <p class="member-role">Guitare lead</p>
+        <h3 class="member-name">Deshayes Quentin</h3>
+        <p class="member-role">Guitare</p>
       </article>
 
       <article class="member-card">
         <div class="member-photo">
-          <img class="lazy-img" data-src="membre-3.jpg" alt="Portrait du bassiste">
+          <img class="lazy-img" data-src="membre-3.jpg" alt="Portrait du deuxième guitariste">
         </div>
-        <h3 class="member-name">Marek Solt</h3>
-        <p class="member-role">Basse</p>
+        <h3 class="member-name">Nom du 2e guitariste</h3>
+        <p class="member-role">Guitare</p>
       </article>
 
       <article class="member-card">
         <div class="member-photo">
           <img class="lazy-img" data-src="membre-4.jpg" alt="Portrait du batteur">
         </div>
-        <h3 class="member-name">Nyla Kross</h3>
+        <h3 class="member-name">Nom du batteur</h3>
         <p class="member-role">Batterie</p>
       </article>
 
@@ -635,12 +642,14 @@ button:focus-visible {
   <!-- FOOTER                                         -->
   <!-- ============================================= -->
   <footer class="site-footer" id="footer">
-    <div class="footer-logo">THE SAVAGE<span>REBELS</span></div>
+    <div class="footer-logo">
+      <img src="img/logo.png" alt="Logo THE SAVAGE REBELS" class="footer-logo-img">
+    </div>
 
     <ul class="social-links">
+      <li><a href="https://www.youtube.com/@TheSavageRebels/featured" target="_blank" rel="noopener">YouTube</a></li>
       <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
       <li><a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a></li>
-      <li><a href="https://youtube.com" target="_blank" rel="noopener">YouTube</a></li>
       <li><a href="https://open.spotify.com" target="_blank" rel="noopener">Spotify</a></li>
       <li><a href="https://bandcamp.com" target="_blank" rel="noopener">Bandcamp</a></li>
     </ul>
@@ -783,6 +792,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
+// =====================================================================
+// 5. ENREGISTREMENT DU SERVICE WORKER (PWA)
+//    Permet le fonctionnement hors-ligne et l'installation du site
+//    comme application (sur mobile et desktop).
+// =====================================================================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('PWA/sw.js')
+      .then(reg => console.log('Service Worker enregistré :', reg.scope))
+      .catch(err => console.error('Échec enregistrement Service Worker :', err));
+  });
+}
 
   </script>
 </body>
