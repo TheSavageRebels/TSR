@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon compte — THE SAVAGE REBELS</title>
+<link rel="icon" type="image/png" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --c-black: #0a0908;
+  --c-black-soft: #131110;
+  --c-card: #17140f0f;
+  --c-white: #ede7e3;
+  --c-red: #c81d25;
+  --c-red-dark: #7a0f14;
+  --c-steel: #4a4744;
+  --c-green: #2fbf5c;
+  --font-display: 'Anton', sans-serif;
+  --font-body: 'Oswald', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--c-black);
+  color: var(--c-white);
+  font-family: var(--font-body);
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+
+.top-bar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 1.5rem clamp(1.5rem, 5vw, 4rem);
+}
+.top-bar-logo { display:flex; align-items:center; gap:0.7rem; }
+.top-bar-logo img { height:36px; }
+.top-bar-logo span { font-family: var(--font-display); letter-spacing:0.05em; font-size:1.1rem; }
+.back-link {
+  font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase;
+  font-weight:600; color: var(--c-steel); transition:color .2s;
+}
+.back-link:hover { color: var(--c-white); }
+
+main {
+  max-width: 560px;
+  margin: 2rem auto 6rem;
+  padding: 0 1.5rem;
+}
+
+h1.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.page-sub { color: var(--c-steel); font-size:0.9rem; margin-bottom:2.2rem; }
+
+.card {
+  background: var(--c-black-soft);
+  border: 1px solid rgba(237,231,227,0.08);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+/* Onglets connexion / inscription */
+.auth-tabs {
+  display:flex;
+  margin-bottom: 1.8rem;
+  border-bottom: 1px solid rgba(237,231,227,0.12);
+}
+.auth-tab {
+  flex:1;
+  text-align:center;
+  padding: 0.9rem 0;
+  font-size:0.85rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  font-weight:600;
+  color: var(--c-steel);
+  background:none; border:none; cursor:pointer;
+  position:relative;
+}
+.auth-tab.is-active { color: var(--c-white); }
+.auth-tab.is-active::after {
+  content:''; position:absolute; left:0; right:0; bottom:-1px; height:2px;
+  background: var(--c-red);
+}
+
+.field { margin-bottom: 1.1rem; }
+.field label {
+  display:block; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+  color: var(--c-steel); margin-bottom:0.4rem; font-weight:600;
+}
+.field input {
+  width:100%; padding:0.85rem 1rem;
+  background: rgba(237,231,227,0.04);
+  border: 1px solid rgba(237,231,227,0.15);
+  color: var(--c-white);
+  font-family: var(--font-body);
+  font-size:0.95rem;
+  transition: border-color .2s;
+}
+.field input:focus {
+  outline:none; border-color: var(--c-red);
+}
+
+.btn-primary {
+  width:100%;
+  padding: 1rem;
+  background: var(--c-red);
+  border: none;
+  color: var(--c-white);
+  font-family: var(--font-body);
+  font-weight:600;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  font-size:0.9rem;
+  cursor:pointer;
+  transition: background .2s;
+}
+.btn-primary:hover { background: var(--c-red-dark); }
+.btn-primary:disabled { opacity:0.5; cursor:not-allowed; }
+
+.link-small {
+  display:block; text-align:center; margin-top:0.9rem;
+  font-size:0.78rem; color: var(--c-steel);
+}
+.link-small a, .link-small button {
+  color: var(--c-white); text-decoration: underline; background:none; border:none;
+  font-family:inherit; font-size:inherit; cursor:pointer; padding:0;
+}
+
+.divider {
+  display:flex; align-items:center; gap:1rem;
+  margin: 1.8rem 0 1.4rem;
+  color: var(--c-steel);
+  font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em;
+}
+.divider::before, .divider::after {
+  content:''; flex:1; height:1px; background: rgba(237,231,227,0.12);
+}
+
+.provider-grid {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+.provider-btn {
+  display:flex; align-items:center; gap:0.7rem;
+  padding: 0.8rem 1rem;
+  background: rgba(237,231,227,0.04);
+  border: 1px solid rgba(237,231,227,0.15);
+  color: var(--c-white);
+  font-family: var(--font-body);
+  font-size:0.82rem;
+  font-weight:600;
+  cursor:pointer;
+  transition: border-color .2s, background .2s;
+}
+.provider-btn:hover { border-color: var(--c-red); background: rgba(200,29,37,0.08); }
+.provider-btn svg, .provider-btn img { width:18px; height:18px; flex-shrink:0; }
+
+.msg {
+  padding: 0.8rem 1rem;
+  font-size:0.82rem;
+  margin-bottom: 1.2rem;
+  border-left: 3px solid var(--c-red);
+  background: rgba(200,29,37,0.08);
+  display:none;
+}
+.msg.is-visible { display:block; }
+.msg.is-success { border-left-color: var(--c-green); background: rgba(47,191,92,0.08); }
+
+/* ---- Vue "connecté" ---- */
+.profile-header {
+  display:flex; align-items:center; gap:1.1rem;
+  margin-bottom: 1.6rem;
+}
+.profile-avatar {
+  width:64px; height:64px; border-radius:50%;
+  background: var(--c-red);
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-display);
+  font-size:1.6rem;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.profile-avatar img { width:100%; height:100%; object-fit:cover; }
+.profile-name { font-size:1.15rem; font-weight:600; }
+.profile-email { color: var(--c-steel); font-size:0.85rem; margin-top:0.15rem; }
+
+.verify-banner {
+  padding:0.9rem 1.1rem;
+  background: rgba(200,29,37,0.1);
+  border-left:3px solid var(--c-red);
+  font-size:0.82rem;
+  margin-bottom:1.6rem;
+  display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+}
+.verify-banner button {
+  background:none; border:1px solid var(--c-white); color:var(--c-white);
+  padding:0.45rem 0.9rem; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase;
+  font-weight:600; cursor:pointer; white-space:nowrap;
+}
+.verify-banner button:hover { border-color: var(--c-red); background: var(--c-red); }
+
+.section-label {
+  font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase;
+  color: var(--c-steel); font-weight:600; margin: 1.6rem 0 0.8rem;
+}
+
+.provider-list { border-top: 1px solid rgba(237,231,227,0.1); }
+.provider-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid rgba(237,231,227,0.08);
+}
+.provider-row-left { display:flex; align-items:center; gap:0.9rem; }
+.provider-row-left svg, .provider-row-left img { width:22px; height:22px; }
+.provider-row-name { font-size:0.9rem; }
+.provider-status {
+  display:flex; align-items:center; gap:0.4rem;
+  font-size:0.82rem; font-weight:600;
+}
+.provider-status.is-active { color: var(--c-green); }
+.provider-status.is-inactive { color: var(--c-steel); }
+.provider-status svg { width:16px; height:16px; }
+.provider-link-btn, .provider-unlink-btn {
+  background:none; border:1px solid rgba(237,231,227,0.25); color:var(--c-white);
+  padding:0.35rem 0.8rem; font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase;
+  font-weight:600; cursor:pointer; margin-left:0.6rem;
+}
+.provider-link-btn:hover { border-color: var(--c-red); background: var(--c-red); }
+.provider-unlink-btn:hover { border-color: var(--c-red-dark); color:#e08a8a; }
+
+.btn-logout {
+  width:100%; margin-top:2rem;
+  padding:0.9rem; background:none; border:1px solid rgba(237,231,227,0.2);
+  color: var(--c-white); font-family:var(--font-body); font-weight:600;
+  letter-spacing:0.1em; text-transform:uppercase; font-size:0.85rem; cursor:pointer;
+}
+.btn-logout:hover { border-color: var(--c-red); color:#e08a8a; }
+
+.hidden { display:none !important; }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <a href="index.html" class="top-bar-logo">
+    <img src="img/logo.png" alt="Logo">
+    <span>THE SAVAGE REBELS</span>
+  </a>
+  <a href="index.html" class="back-link">&larr; Retour au site</a>
+</header>
+
+<main>
+
+  <!-- ============================================= -->
+  <!-- VUE 1 : NON CONNECTÉ — Connexion / Inscription -->
+  <!-- ============================================= -->
+  <section id="authView">
+    <h1 class="page-title">Mon compte</h1>
+    <p class="page-sub">Connectez-vous ou créez un compte pour accéder à votre espace.</p>
+
+    <div class="card">
+      <div class="auth-tabs">
+        <button class="auth-tab is-active" id="tabLogin" type="button">Connexion</button>
+        <button class="auth-tab" id="tabRegister" type="button">Créer un compte</button>
+      </div>
+
+      <div class="msg" id="authMsg"></div>
+
+      <!-- Formulaire connexion -->
+      <form id="loginForm">
+        <div class="field">
+          <label for="loginEmail">Adresse e-mail</label>
+          <input type="email" id="loginEmail" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="loginPassword">Mot de passe</label>
+          <input type="password" id="loginPassword" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn-primary">Se connecter</button>
+        <p class="link-small"><button type="button" id="forgotPasswordBtn">Mot de passe oublié ?</button></p>
+      </form>
+
+      <!-- Formulaire inscription -->
+      <form id="registerForm" class="hidden">
+        <div class="field">
+          <label for="registerName">Pseudo</label>
+          <input type="text" id="registerName" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="registerEmail">Adresse e-mail</label>
+          <input type="email" id="registerEmail" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="registerPassword">Mot de passe</label>
+          <input type="password" id="registerPassword" autocomplete="new-password" minlength="6" required>
+        </div>
+        <button type="submit" class="btn-primary">Créer mon compte</button>
+        <p class="link-small">Un e-mail de vérification vous sera envoyé.</p>
+      </form>
+
+      <div class="divider">Ou continuer avec</div>
+
+      <div class="provider-grid">
+        <button class="provider-btn" data-provider="google">
+          <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.6 5.1 29.6 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.4-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.5 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l6-6C34.6 6.1 29.6 4 24 4c-7.5 0-13.9 4.2-17.7 10.7z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-1.9 14.2-5.1l-6.6-5.4C29.6 35.4 27 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.6 5.1C9.9 39.6 16.4 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.3 5.7l6.6 5.4C41.4 35.6 44 30.2 44 24c0-1.4-.1-2.7-.4-3.5z"/></svg>
+          Google
+        </button>
+        <button class="provider-btn" data-provider="facebook">
+          <svg viewBox="0 0 24 24" fill="#1877F2"><path d="M22 12c0-5.5-4.5-10-10-10S2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7C18.3 21.1 22 17 22 12z"/></svg>
+          Facebook
+        </button>
+        <button class="provider-btn" data-provider="github">
+          <svg viewBox="0 0 24 24" fill="#ffffff"><path d="M12 2C6.5 2 2 6.5 2 12c0 4.4 2.9 8.2 6.8 9.5.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .3.3.6.9.6 1.8v2.6c0 .3.2.6.7.5C19.1 20.2 22 16.4 22 12c0-5.5-4.5-10-10-10z"/></svg>
+          GitHub
+        </button>
+        <button class="provider-btn" data-provider="yahoo">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#6001D2"/><text x="12" y="16.5" font-family="Arial,sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">Y!</text></svg>
+          Yahoo
+        </button>
+        <button class="provider-btn" data-provider="microsoft">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="9" height="9" fill="#F35325"/><rect x="13" y="2" width="9" height="9" fill="#81BC06"/><rect x="2" y="13" width="9" height="9" fill="#05A6F0"/><rect x="13" y="13" width="9" height="9" fill="#FFBA08"/></svg>
+          Microsoft
+        </button>
+        <button class="provider-btn" data-provider="apple">
+          <svg viewBox="0 0 24 24" fill="#ffffff"><path d="M16.4 1c.1 1.1-.3 2.2-1 3-.7.8-1.9 1.5-3 1.4-.1-1.1.4-2.2 1-2.9.7-.9 2-1.5 3-1.5zM19.9 17.3c-.5 1.1-.7 1.6-1.4 2.6-.9 1.4-2.2 3.1-3.8 3.1-1.4 0-1.8-.9-3.7-.9s-2.4.9-3.7.9c-1.6 0-2.8-1.5-3.7-2.9C1 16.9.4 12.5 2.1 9.9c1.1-1.8 3-2.9 4.7-2.9 1.5 0 2.5 1 3.7 1s2-1.2 3.8-1.2c1.5 0 3 .8 4 2.2-3.5 1.9-3 6.9 1.6 8.3z"/></svg>
+          Apple
+        </button>
+      </div>
+
+      <p class="link-small" style="margin-top:1rem; font-size:0.72rem;">
+        Play Games n'est disponible que sur l'application mobile.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- VUE 2 : CONNECTÉ — Gestion du compte           -->
+  <!-- ============================================= -->
+  <section id="accountView" class="hidden">
+    <h1 class="page-title">Mon compte</h1>
+    <p class="page-sub">Gérez vos informations et vos moyens de connexion.</p>
+
+    <div class="card">
+      <div class="profile-header">
+        <div class="profile-avatar" id="profileAvatar"></div>
+        <div>
+          <p class="profile-name" id="profileName"></p>
+          <p class="profile-email" id="profileEmail"></p>
+        </div>
+      </div>
+
+      <div class="verify-banner hidden" id="verifyBanner">
+        <span>Votre adresse e-mail n'est pas encore vérifiée.</span>
+        <button type="button" id="resendVerifyBtn">Renvoyer l'e-mail</button>
+      </div>
+
+      <div class="msg" id="accountMsg"></div>
+
+      <p class="section-label">Fournisseurs de connexion</p>
+      <div class="provider-list" id="providerList"></div>
+
+      <button class="btn-logout" id="logoutBtn">Déconnexion</button>
+    </div>
+  </section>
+
+</main>
+
+<script type="module">
+import {
+  auth, providers,
+  onAuthStateChanged, signOut,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  updateProfile,
+  linkWithPopup,
+  unlink
+} from './auth-shared.js';
+
+// ---------- Références DOM ----------
+const authView    = document.getElementById('authView');
+const accountView = document.getElementById('accountView');
+
+const tabLogin    = document.getElementById('tabLogin');
+const tabRegister = document.getElementById('tabRegister');
+const loginForm   = document.getElementById('loginForm');
+const registerForm= document.getElementById('registerForm');
+const authMsg     = document.getElementById('authMsg');
+
+const forgotBtn   = document.getElementById('forgotPasswordBtn');
+
+const profileAvatar = document.getElementById('profileAvatar');
+const profileName   = document.getElementById('profileName');
+const profileEmail  = document.getElementById('profileEmail');
+const verifyBanner  = document.getElementById('verifyBanner');
+const resendVerifyBtn = document.getElementById('resendVerifyBtn');
+const accountMsg    = document.getElementById('accountMsg');
+const providerList  = document.getElementById('providerList');
+const logoutBtn     = document.getElementById('logoutBtn');
+
+// ---------- Utilitaires de messages ----------
+function showMsg(el, text, isSuccess = false) {
+  el.textContent = text;
+  el.classList.add('is-visible');
+  el.classList.toggle('is-success', isSuccess);
+}
+function clearMsg(el) {
+  el.textContent = '';
+  el.classList.remove('is-visible', 'is-success');
+}
+
+// ---------- Onglets connexion / inscription ----------
+tabLogin.addEventListener('click', () => {
+  tabLogin.classList.add('is-active');
+  tabRegister.classList.remove('is-active');
+  loginForm.classList.remove('hidden');
+  registerForm.classList.add('hidden');
+  clearMsg(authMsg);
+});
+tabRegister.addEventListener('click', () => {
+  tabRegister.classList.add('is-active');
+  tabLogin.classList.remove('is-active');
+  registerForm.classList.remove('hidden');
+  loginForm.classList.add('hidden');
+  clearMsg(authMsg);
+});
+
+// ---------- Traduction des erreurs Firebase courantes ----------
+function friendlyError(err) {
+  const code = err && err.code ? err.code : '';
+  const map = {
+    'auth/invalid-email': "Adresse e-mail invalide.",
+    'auth/user-not-found': "Aucun compte ne correspond à cet e-mail.",
+    'auth/wrong-password': "Mot de passe incorrect.",
+    'auth/invalid-credential': "Identifiants incorrects.",
+    'auth/email-already-in-use': "Un compte existe déjà avec cet e-mail.",
+    'auth/weak-password': "Le mot de passe doit contenir au moins 6 caractères.",
+    'auth/popup-closed-by-user': "Fenêtre de connexion fermée avant la fin.",
+    'auth/account-exists-with-different-credential': "Un compte existe déjà avec un autre mode de connexion pour cet e-mail.",
+    'auth/credential-already-in-use': "Ce compte est déjà lié à un autre utilisateur."
+  };
+  return map[code] || "Une erreur est survenue. Réessayez.";
+}
+
+// ---------- Connexion par e-mail / mot de passe ----------
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  clearMsg(authMsg);
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    showMsg(authMsg, friendlyError(err));
+  }
+});
+
+// ---------- Création de compte ----------
+registerForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  clearMsg(authMsg);
+  const name = document.getElementById('registerName').value.trim();
+  const email = document.getElementById('registerEmail').value.trim();
+  const password = document.getElementById('registerPassword').value;
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    if (name) await updateProfile(cred.user, { displayName: name });
+    await sendEmailVerification(cred.user);
+    showMsg(authMsg, "Compte créé ! Un e-mail de vérification vient de vous être envoyé.", true);
+  } catch (err) {
+    showMsg(authMsg, friendlyError(err));
+  }
+});
+
+// ---------- Mot de passe oublié ----------
+forgotBtn.addEventListener('click', async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  if (!email) {
+    showMsg(authMsg, "Renseignez votre e-mail ci-dessus puis cliquez à nouveau.");
+    return;
+  }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    showMsg(authMsg, "E-mail de réinitialisation envoyé.", true);
+  } catch (err) {
+    showMsg(authMsg, friendlyError(err));
+  }
+});
+
+// ---------- Connexion via fournisseurs OAuth (vue non connectée) ----------
+document.querySelectorAll('#authView .provider-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const key = btn.getAttribute('data-provider');
+    const provider = providers[key];
+    if (!provider) return;
+    clearMsg(authMsg);
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (err) {
+      showMsg(authMsg, friendlyError(err));
+    }
+  });
+});
+
+// ---------- Déconnexion ----------
+logoutBtn.addEventListener('click', () => signOut(auth));
+
+// ---------- Renvoi de l'e-mail de vérification ----------
+resendVerifyBtn.addEventListener('click', async () => {
+  try {
+    await sendEmailVerification(auth.currentUser);
+    showMsg(accountMsg, "E-mail de vérification renvoyé.", true);
+  } catch (err) {
+    showMsg(accountMsg, friendlyError(err));
+  }
+});
+
+// ---------- Liste des fournisseurs (vue connectée) ----------
+const PROVIDER_DEFS = [
+  { id: 'password', label: 'Adresse e-mail/Mot de passe', linkable: false,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#ede7e3" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>' },
+  { id: 'google.com', label: 'Google', linkable: true,
+    icon: '<svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.6 5.1 29.6 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.4-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.5 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l6-6C34.6 6.1 29.6 4 24 4c-7.5 0-13.9 4.2-17.7 10.7z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-1.9 14.2-5.1l-6.6-5.4C29.6 35.4 27 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.6 5.1C9.9 39.6 16.4 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.3 5.7l6.6 5.4C41.4 35.6 44 30.2 44 24c0-1.4-.1-2.7-.4-3.5z"/></svg>' },
+  { id: 'play-games', label: 'Play Games', linkable: false, unavailable: true,
+    icon: '<svg viewBox="0 0 24 24" fill="#4a4744"><path d="M20.5 9.6 13 5.3c-.6-.4-1.4-.4-2 0L3.5 9.6c-.6.4-1 1-1 1.8v1.2c0 .7.4 1.4 1 1.8l7.5 4.3c.6.4 1.4.4 2 0l7.5-4.3c.6-.4 1-1 1-1.8v-1.2c0-.8-.4-1.4-1-1.8z"/></svg>' },
+  { id: 'facebook.com', label: 'Facebook', linkable: true,
+    icon: '<svg viewBox="0 0 24 24" fill="#1877F2"><path d="M22 12c0-5.5-4.5-10-10-10S2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7C18.3 21.1 22 17 22 12z"/></svg>' },
+  { id: 'github.com', label: 'GitHub', linkable: true,
+    icon: '<svg viewBox="0 0 24 24" fill="#ede7e3"><path d="M12 2C6.5 2 2 6.5 2 12c0 4.4 2.9 8.2 6.8 9.5.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .3.3.6.9.6 1.8v2.6c0 .3.2.6.7.5C19.1 20.2 22 16.4 22 12c0-5.5-4.5-10-10-10z"/></svg>' },
+  { id: 'yahoo.com', label: 'Yahoo!', linkable: true,
+    icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#6001D2"/><text x="12" y="16.5" font-family="Arial,sans-serif" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">Y!</text></svg>' },
+  { id: 'microsoft.com', label: 'Microsoft', linkable: true,
+    icon: '<svg viewBox="0 0 24 24"><rect x="2" y="2" width="9" height="9" fill="#F35325"/><rect x="13" y="2" width="9" height="9" fill="#81BC06"/><rect x="2" y="13" width="9" height="9" fill="#05A6F0"/><rect x="13" y="13" width="9" height="9" fill="#FFBA08"/></svg>' },
+  { id: 'apple.com', label: 'Apple', linkable: true,
+    icon: '<svg viewBox="0 0 24 24" fill="#ede7e3"><path d="M16.4 1c.1 1.1-.3 2.2-1 3-.7.8-1.9 1.5-3 1.4-.1-1.1.4-2.2 1-2.9.7-.9 2-1.5 3-1.5zM19.9 17.3c-.5 1.1-.7 1.6-1.4 2.6-.9 1.4-2.2 3.1-3.8 3.1-1.4 0-1.8-.9-3.7-.9s-2.4.9-3.7.9c-1.6 0-2.8-1.5-3.7-2.9C1 16.9.4 12.5 2.1 9.9c1.1-1.8 3-2.9 4.7-2.9 1.5 0 2.5 1 3.7 1s2-1.2 3.8-1.2c1.5 0 3 .8 4 2.2-3.5 1.9-3 6.9 1.6 8.3z"/></svg>' }
+];
+
+const CHECK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>';
+
+function providerKeyFor(id) {
+  // Fait correspondre l'id Firebase (providerId) avec la clé du module providers{}
+  const map = {
+    'google.com':'google', 'facebook.com':'facebook', 'github.com':'github',
+    'yahoo.com':'yahoo', 'microsoft.com':'microsoft', 'apple.com':'apple'
+  };
+  return map[id];
+}
+
+function renderProviderList(user) {
+  const linkedIds = user.providerData.map(p => p.providerId);
+  providerList.innerHTML = '';
+
+  PROVIDER_DEFS.forEach(def => {
+    const row = document.createElement('div');
+    row.className = 'provider-row';
+
+    const isLinked = def.id === 'password'
+      ? linkedIds.includes('password')
+      : linkedIds.includes(def.id);
+
+    let statusHtml, actionHtml = '';
+
+    if (def.unavailable) {
+      statusHtml = `<span class="provider-status is-inactive">Indisponible (app mobile)</span>`;
+    } else if (isLinked) {
+      statusHtml = `<span class="provider-status is-active">${CHECK_ICON} Activé</span>`;
+      // On autorise le "unlink" seulement s'il reste au moins un autre moyen de connexion
+      if (def.linkable && linkedIds.length > 1) {
+        actionHtml = `<button class="provider-unlink-btn" data-unlink="${def.id}">Délier</button>`;
+      }
+    } else {
+      statusHtml = `<span class="provider-status is-inactive">Non lié</span>`;
+      if (def.linkable) {
+        actionHtml = `<button class="provider-link-btn" data-link="${def.id}">Lier</button>`;
+      }
+    }
+
+    row.innerHTML = `
+      <div class="provider-row-left">
+        ${def.icon}
+        <span class="provider-row-name">${def.label}</span>
+      </div>
+      <div style="display:flex; align-items:center;">
+        ${statusHtml}
+        ${actionHtml}
+      </div>
+    `;
+    providerList.appendChild(row);
+  });
+
+  // Actions "Lier"
+  providerList.querySelectorAll('[data-link]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.getAttribute('data-link');
+      const key = providerKeyFor(id);
+      clearMsg(accountMsg);
+      try {
+        await linkWithPopup(auth.currentUser, providers[key]);
+        showMsg(accountMsg, "Fournisseur lié avec succès.", true);
+        renderProviderList(auth.currentUser);
+      } catch (err) {
+        showMsg(accountMsg, friendlyError(err));
+      }
+    });
+  });
+
+  // Actions "Délier"
+  providerList.querySelectorAll('[data-unlink]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.getAttribute('data-unlink');
+      clearMsg(accountMsg);
+      try {
+        await unlink(auth.currentUser, id);
+        showMsg(accountMsg, "Fournisseur délié.", true);
+        renderProviderList(auth.currentUser);
+      } catch (err) {
+        showMsg(accountMsg, friendlyError(err));
+      }
+    });
+  });
+}
+
+// ---------- Écoute de l'état de connexion ----------
+onAuthStateChanged(auth, (user) => {
+  clearMsg(authMsg);
+  clearMsg(accountMsg);
+
+  if (user) {
+    authView.classList.add('hidden');
+    accountView.classList.remove('hidden');
+
+    profileName.textContent = user.displayName || 'Membre';
+    profileEmail.textContent = user.email || '';
+
+    if (user.photoURL) {
+      profileAvatar.innerHTML = `<img src="${user.photoURL}" alt="Avatar">`;
+    } else {
+      profileAvatar.textContent = (user.displayName || user.email || '?').trim().charAt(0).toUpperCase();
+    }
+
+    const hasPasswordProvider = user.providerData.some(p => p.providerId === 'password');
+    verifyBanner.classList.toggle('hidden', !(hasPasswordProvider && !user.emailVerified));
+
+    renderProviderList(user);
+  } else {
+    accountView.classList.add('hidden');
+    authView.classList.remove('hidden');
+  }
+});
+</script>
+</body>
+</html>
