@@ -105,6 +105,137 @@ button:focus-visible {
 .nav-links a:hover::after { width: 100%; }
 
 /* =================================================================
+   ICONE COMPTE UTILISATEUR (nav)
+================================================================= */
+.nav-account {
+  position: relative;
+  margin-left: clamp(1rem, 3vw, 2rem);
+  mix-blend-mode: normal; /* on sort du mix-blend-mode "difference" du header */
+}
+
+.nav-account-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(237, 231, 227, 0.55);
+  background: rgba(10, 9, 8, 0.35);
+  color: var(--c-white);
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease;
+  padding: 0;
+  overflow: hidden;
+}
+.nav-account-btn:hover {
+  border-color: var(--c-red);
+  box-shadow: 0 0 14px rgba(200, 29, 37, 0.5);
+}
+.nav-account-btn:active { transform: scale(0.94); }
+
+.nav-account-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.nav-account-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nav-account-initial {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+/* Petit point vert = connecté */
+.nav-account-dot {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #2fbf5c;
+  border: 2px solid var(--c-black);
+  display: none;
+}
+.nav-account.is-logged-in .nav-account-dot { display: block; }
+
+/* Menu déroulant */
+.nav-account-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  min-width: 220px;
+  background: var(--c-black-soft);
+  border: 1px solid rgba(237, 231, 227, 0.12);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 200;
+}
+.nav-account-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nav-account-menu-header {
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid rgba(237, 231, 227, 0.1);
+}
+.nav-account-menu-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--c-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nav-account-menu-email {
+  font-size: 0.75rem;
+  color: var(--c-steel);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 0.15rem;
+}
+.nav-account-menu a,
+.nav-account-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.85rem 1.1rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  color: var(--c-white);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.nav-account-menu a:hover,
+.nav-account-menu button:hover {
+  background: var(--c-red);
+  color: var(--c-white);
+}
+.nav-account-menu .is-danger { color: #e08a8a; }
+.nav-account-menu .is-danger:hover { background: var(--c-red-dark); color: var(--c-white); }
+
+/* =================================================================
    HERO — VIDEO PLEIN ECRAN
 ================================================================= */
 .hero {
@@ -613,6 +744,26 @@ button:focus-visible {
         <li><a href="#footer">Contact</a></li>
       </ul>
     </nav>
+
+    <!-- Icône compte utilisateur -->
+    <div class="nav-account" id="navAccount">
+      <button class="nav-account-btn" id="navAccountBtn" aria-haspopup="true" aria-expanded="false" aria-label="Mon compte">
+        <svg id="navAccountIcon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12Z"/>
+          <path d="M3.5 21.8c1.4-4.6 4.9-7.3 8.5-7.3s7.1 2.7 8.5 7.3"/>
+        </svg>
+        <span class="nav-account-dot"></span>
+      </button>
+
+      <div class="nav-account-menu" id="navAccountMenu">
+        <div class="nav-account-menu-header" id="navAccountMenuHeader" style="display:none;">
+          <p class="nav-account-menu-name" id="navAccountMenuName"></p>
+          <p class="nav-account-menu-email" id="navAccountMenuEmail"></p>
+        </div>
+        <a href="compte.html" id="navAccountMenuLink">Mon compte</a>
+        <button type="button" id="navAccountMenuLogout" class="is-danger" style="display:none;">Déconnexion</button>
+      </div>
+    </div>
   </header>
 
   <!-- ============================================= -->
@@ -990,6 +1141,74 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+  </script>
+
+  <!-- ============================================= -->
+  <!-- ICONE COMPTE : état de connexion (Firebase)    -->
+  <!-- On ne connecte JAMAIS l'utilisateur ici : on   -->
+  <!-- se contente d'écouter l'état déjà présent      -->
+  <!-- (partagé avec compte.html) et d'ouvrir un menu. -->
+  <!-- ============================================= -->
+  <script type="module">
+    import { auth, onAuthStateChanged, signOut } from './auth-shared.js';
+
+    const navAccount      = document.getElementById('navAccount');
+    const navAccountBtn   = document.getElementById('navAccountBtn');
+    const navAccountIcon  = document.getElementById('navAccountIcon');
+    const navAccountMenu  = document.getElementById('navAccountMenu');
+    const menuHeader      = document.getElementById('navAccountMenuHeader');
+    const menuName        = document.getElementById('navAccountMenuName');
+    const menuEmail       = document.getElementById('navAccountMenuEmail');
+    const menuLink        = document.getElementById('navAccountMenuLink');
+    const menuLogout      = document.getElementById('navAccountMenuLogout');
+
+    function closeMenu() {
+      navAccountMenu.classList.remove('is-open');
+      navAccountBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    navAccountBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Pas encore connecté -> on ne montre pas de menu, direction compte.html
+      if (!auth.currentUser) {
+        window.location.href = 'compte.html';
+        return;
+      }
+      const isOpen = navAccountMenu.classList.toggle('is-open');
+      navAccountBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!navAccount.contains(e.target)) closeMenu();
+    });
+
+    menuLogout.addEventListener('click', async () => {
+      await signOut(auth);
+      closeMenu();
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navAccount.classList.add('is-logged-in');
+        menuHeader.style.display = 'block';
+        menuLogout.style.display = 'block';
+        menuLink.textContent = 'Gérer mon compte';
+        menuName.textContent = user.displayName || 'Membre';
+        menuEmail.textContent = user.email || '';
+
+        if (user.photoURL) {
+          navAccountIcon.outerHTML = `<img class="nav-account-avatar-img" id="navAccountIcon" src="${user.photoURL}" alt="Avatar">`;
+        } else {
+          const initial = (user.displayName || user.email || '?').trim().charAt(0).toUpperCase();
+          navAccountIcon.outerHTML = `<span class="nav-account-initial" id="navAccountIcon">${initial}</span>`;
+        }
+      } else {
+        navAccount.classList.remove('is-logged-in');
+        menuHeader.style.display = 'none';
+        menuLogout.style.display = 'none';
+        menuLink.textContent = 'Mon compte';
+      }
+    });
   </script>
 </body>
 </html>
