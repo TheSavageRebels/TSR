@@ -592,7 +592,22 @@ button:focus-visible {
   font-weight: 600;
   position: relative;
   padding-bottom: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
+.social-links svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+.social-links li.is-disabled a {
+  cursor: default;
+  opacity: 0.6;
+}
+.social-links li.is-disabled a::after { display: none; }
+.social-links li.is-disabled a:hover { color: inherit; }
 .social-links a::after {
   content: '';
   position: absolute;
@@ -900,10 +915,24 @@ button:focus-visible {
     </div>
 
     <ul class="social-links">
-      <li><a href="https://www.youtube.com/@TheSavageRebels/featured" target="_blank" rel="noopener">YouTube</a></li>
-      <li><a href="https://www.instagram.com/thesavagerebels.officiel/" target="_blank" rel="noopener">Instagram</a></li>
-      <li><a href="https://open.spotify.com" target="_blank" rel="noopener">Spotify</a></li>
-      <li><a href="mailto:thesavagerebels27@gmail.com">Contact</a></li>
+      <li><a href="https://www.youtube.com/@TheSavageRebels/featured" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8ZM9.6 15.6V8.4L15.8 12Z"/></svg>
+        YouTube</a></li>
+      <li><a href="https://www.instagram.com/thesavagerebels.officiel/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 2 .25 2.7.53a5.4 5.4 0 0 1 2 1.3 5.4 5.4 0 0 1 1.3 2c.28.7.47 1.5.53 2.7.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 2-.53 2.7a5.4 5.4 0 0 1-1.3 2 5.4 5.4 0 0 1-2 1.3c-.7.28-1.5.47-2.7.53-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-2-.25-2.7-.53a5.4 5.4 0 0 1-2-1.3 5.4 5.4 0 0 1-1.3-2c-.28-.7-.47-1.5-.53-2.7C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-2 .53-2.7a5.4 5.4 0 0 1 1.3-2 5.4 5.4 0 0 1 2-1.3c.7-.28 1.5-.47 2.7-.53C8.4 2.2 8.8 2.2 12 2.2Zm0 1.98c-3.15 0-3.52 0-4.76.07-1.02.05-1.57.21-1.94.36a3.4 3.4 0 0 0-1.28.83 3.4 3.4 0 0 0-.83 1.28c-.15.37-.31.92-.36 1.94-.06 1.24-.07 1.6-.07 4.76s0 3.52.07 4.76c.05 1.02.21 1.57.36 1.94.16.4.37.75.83 1.28.4.4.7.6 1.28.83.37.15.92.31 1.94.36 1.24.06 1.6.07 4.76.07s3.52 0 4.76-.07c1.02-.05 1.57-.21 1.94-.36.4-.16.75-.37 1.28-.83.4-.4.6-.7.83-1.28.15-.37.31-.92.36-1.94.06-1.24.07-1.6.07-4.76s0-3.52-.07-4.76c-.05-1.02-.21-1.57-.36-1.94a3.4 3.4 0 0 0-.83-1.28 3.4 3.4 0 0 0-1.28-.83c-.37-.15-.92-.31-1.94-.36-1.24-.06-1.6-.07-4.76-.07Zm0 3.4a5.42 5.42 0 1 1 0 10.84A5.42 5.42 0 0 1 12 7.58Zm0 1.98a3.44 3.44 0 1 0 0 6.88 3.44 3.44 0 0 0 0-6.88Zm5.65-2.15a1.27 1.27 0 1 1-2.53 0 1.27 1.27 0 0 1 2.53 0Z"/></svg>
+        Instagram</a></li>
+      <li><a href="https://open.spotify.com" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm5.5 17.3a.75.75 0 0 1-1.03.25c-2.82-1.72-6.37-2.11-10.55-1.15a.75.75 0 1 1-.33-1.46c4.57-1.04 8.5-.6 11.66 1.33.36.22.47.68.25 1.03Zm1.47-3.27a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.56-11.97-1.4a.94.94 0 1 1-.55-1.8c4.37-1.33 9.79-.68 13.5 1.6.44.27.58.85.31 1.29Zm.13-3.4c-3.87-2.3-10.26-2.51-13.96-1.39a1.13 1.13 0 1 1-.65-2.16c4.24-1.29 11.29-1.04 15.75 1.62a1.13 1.13 0 1 1-1.14 1.93Z"/></svg>
+        Spotify</a></li>
+      <li><a href="https://music.amazon.fr/albums/B0DKQNJRTD?ref=dm_sh_npYChDZzvl6BHO3gJoV7vyIc7" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 12.2c0 1.4.03 2.57-.67 3.82-.57 1.02-1.47 1.64-2.48 1.64-1.38 0-2.18-1.05-2.18-2.6 0-3.06 2.74-3.62 5.33-3.62v.76Zm3.62 8.75a.75.75 0 0 1-.85.08c-1.2-1-1.42-1.46-2.08-2.4-1.98 2.03-3.39 2.63-5.97 2.63-3.05 0-5.42-1.88-5.42-5.65 0-2.95 1.6-4.95 3.87-5.93 1.97-.87 4.72-1.02 6.82-1.26v-.47c0-.86.07-1.88-.44-2.62-.44-.66-1.29-.93-2.03-.93-1.38 0-2.6.71-2.9 2.18-.06.33-.34.65-.68.67l-3.8-.4c-.32-.07-.68-.33-.59-.82C4.15 1.98 8.05 0 11.55 0c1.79 0 4.13.48 5.54 1.83 1.79 1.66 1.62 3.87 1.62 6.28v5.69c0 1.71.71 2.46 1.38 3.39.24.33.29.73-.01.98-.75.62-2.08 1.78-2.81 2.42l-.15.03ZM21.4 19.9c-2.6 1.92-6.38 2.94-9.63 2.94-4.56 0-8.66-1.69-11.77-4.5-.24-.22-.03-.52.26-.35 3.35 1.95 7.49 3.12 11.77 3.12 2.89 0 6.06-.6 8.98-1.84.44-.19.81.29.39.63Zm1.07-1.22c-.33-.42-2.19-.2-3.03-.1-.25.03-.29-.19-.06-.35 1.48-1.04 3.92-.74 4.2-.39.28.35-.07 2.8-1.47 3.97-.21.18-.42.08-.32-.15.31-.78 1-2.55.68-2.98Z"/></svg>
+        Amazon Music</a></li>
+      <li class="is-disabled"><a href="#" onclick="return false;" aria-disabled="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="4.2" cy="17.5" r="3.2"/><circle cx="19.8" cy="17.5" r="3.2"/><path d="M6.8 17.5V8.2C6.8 5 9 2.6 12.2 2 15 1.5 17.4 3 18.8 5.4c.4.68.9 1.9 1 3.1v6.5h-2.4V9.3c0-1.3-.5-2.7-1.3-3.6-.9-1-2.2-1.5-3.5-1.2-1.7.35-3 1.9-3 3.7v9.3H6.8Z"/></svg>
+        Deezer</a></li>
+      <li><a href="mailto:thesavagerebels27@gmail.com">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13A1.5 1.5 0 0 1 20.5 20h-17A1.5 1.5 0 0 1 2 18.5v-13Zm2.2.6 7.3 5.7a.9.9 0 0 0 1 0l7.3-5.7H4.2Zm-.2 1.6v10.3h16V7.7l-7.24 5.66a2.4 2.4 0 0 1-2.52 0L4 7.7Z"/></svg>
+        Contact</a></li>
     </ul>
 
     <p class="footer-copy">&copy; 2026 THE SAVAGE REBELS. Tous droits réservés.</p>
