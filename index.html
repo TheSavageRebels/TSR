@@ -494,6 +494,97 @@ button:focus-visible {
   .cta-btn { padding: 1rem 2.2rem; font-size: 0.9rem; }
 }
 
+/* =================================================================
+   BANNIERE D'INSTALLATION PWA (Android + iPhone)
+================================================================= */
+.install-banner {
+  position: fixed;
+  left: 50%;
+  bottom: 1.2rem;
+  transform: translate(-50%, 140%);
+  z-index: 200;
+  width: min(92vw, 430px);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  background: var(--c-black-soft);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-left: 3px solid var(--c-red);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.19,1,0.22,1), opacity 0.5s ease;
+}
+.install-banner.is-visible {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+.install-banner-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.install-banner-text {
+  flex: 1;
+  min-width: 0;
+}
+.install-banner-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--c-white);
+}
+.install-banner-sub {
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--c-steel);
+  font-weight: 300;
+}
+.install-banner-sub strong {
+  color: var(--c-white);
+  font-weight: 600;
+}
+.install-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.install-banner-btn {
+  background: var(--c-red);
+  color: var(--c-white);
+  border: none;
+  padding: 0.55rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  white-space: nowrap;
+}
+.install-banner-btn:hover { background: var(--c-red-dark); }
+.install-banner-close {
+  background: transparent;
+  border: none;
+  color: var(--c-steel);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.2rem 0.3rem;
+}
+.install-banner-close:hover { color: var(--c-white); }
+
+@media (max-width: 560px) {
+  .install-banner { width: 94vw; padding: 0.9rem; gap: 0.7rem; }
+  .install-banner-icon { width: 36px; height: 36px; }
+}
+
 /* Respect de la préférence utilisateur pour moins d'animations */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -544,7 +635,7 @@ button:focus-visible {
     <div class="hero-content">
       <p class="hero-eyebrow">Groupe de Hard-rock Metal</p>
       <h1 class="hero-title" data-text="THE SAVAGE REBELS">THE SAVAGE REBELS</h1>
-      <p class="hero-subtitle">Nouvel album « Cendres &amp; Silence » — en tournée maintenant</p>
+      <p class="hero-subtitle">Nouvel albulm « Farenightmare » en tournée maintenant</p>
 
       <!-- Bouton CTA : scroll fluide vers la section suivante -->
       <button class="cta-btn" id="discoverBtn">
@@ -584,34 +675,33 @@ button:focus-visible {
 
       <article class="member-card">
         <div class="member-photo">
-          <!-- Remplacer par la vraie photo du membre. data-src = chargement différé (lazy load) -->
-          <img class="lazy-img" data-src="membre-1.jpg" alt="Portrait du chanteur">
+          <img class="lazy-img" data-src="main/img/clement.png" alt="Portrait de Clément Deshayes, chanteur">
         </div>
-        <h3 class="member-name">Nom du chanteur</h3>
+        <h3 class="member-name">Clément Deshayes</h3>
         <p class="member-role">Chant</p>
       </article>
 
       <article class="member-card">
         <div class="member-photo">
-          <img class="lazy-img" data-src="membre-2.jpg" alt="Portrait du guitariste Deshayes Quentin">
+          <img class="lazy-img" data-src="main/img/quentin.png" alt="Portrait de Quentin Deshayes, guitariste">
         </div>
-        <h3 class="member-name">Deshayes Quentin</h3>
+        <h3 class="member-name">Quentin Deshayes</h3>
         <p class="member-role">Guitare</p>
       </article>
 
       <article class="member-card">
         <div class="member-photo">
-          <img class="lazy-img" data-src="membre-3.jpg" alt="Portrait du deuxième guitariste">
+          <img class="lazy-img" data-src="main/img/ewan.png" alt="Portrait d'Ewan Claire, guitariste">
         </div>
-        <h3 class="member-name">Nom du 2e guitariste</h3>
+        <h3 class="member-name">Ewan Claire</h3>
         <p class="member-role">Guitare</p>
       </article>
 
       <article class="member-card">
         <div class="member-photo">
-          <img class="lazy-img" data-src="membre-4.jpg" alt="Portrait du batteur">
+          <img class="lazy-img" data-src="main/img/mikael.png" alt="Portrait de Mikael Benbrahim Andaloussi, batteur">
         </div>
-        <h3 class="member-name">Nom du batteur</h3>
+        <h3 class="member-name">Mikael Benbrahim Andaloussi</h3>
         <p class="member-role">Batterie</p>
       </article>
 
@@ -637,6 +727,23 @@ button:focus-visible {
       <figure class="gallery-item"><img class="lazy-img" data-src="live-6.jpg" alt="Concert - vue d'ensemble de la salle"></figure>
     </div>
   </section>
+
+  <!-- ============================================= -->
+  <!-- BANNIERE D'INSTALLATION PWA (Android + iPhone) -->
+  <!-- ============================================= -->
+  <div class="install-banner" id="installBanner" role="dialog" aria-live="polite">
+    <div class="install-banner-icon">
+      <img src="img/logo.png" alt="Logo THE SAVAGE REBELS">
+    </div>
+    <div class="install-banner-text">
+      <p class="install-banner-title">Installer l'application</p>
+      <p class="install-banner-sub" id="installBannerSub">Ajoutez THE SAVAGE REBELS à votre écran d'accueil.</p>
+    </div>
+    <div class="install-banner-actions">
+      <button class="install-banner-btn" id="installBannerBtn">Installer</button>
+      <button class="install-banner-close" id="installBannerClose" aria-label="Fermer">&times;</button>
+    </div>
+  </div>
 
   <!-- ============================================= -->
   <!-- FOOTER                                         -->
@@ -792,6 +899,89 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
+// =====================================================================
+// 4bis. BANNIERE D'INSTALLATION PWA (Android + iPhone)
+//    - Android/Chrome : on intercepte l'évènement natif "beforeinstallprompt"
+//      et on affiche notre propre bandeau avec un bouton "Installer".
+//    - iPhone/iPad (Safari) : il n'existe pas d'évènement d'installation natif,
+//      on affiche donc un message expliquant comment faire
+//      "Partager -> Sur l'écran d'accueil".
+//    Dans les deux cas : le bandeau ne s'affiche pas si l'app est déjà
+//    installée (mode standalone), et un choix "fermer" est mémorisé
+//    pendant quelques jours pour ne pas être intrusif.
+// =====================================================================
+(() => {
+  const banner     = document.getElementById('installBanner');
+  const bannerSub   = document.getElementById('installBannerSub');
+  const installBtn  = document.getElementById('installBannerBtn');
+  const closeBtn    = document.getElementById('installBannerClose');
+  if (!banner) return;
+
+  const DISMISS_KEY  = 'tsr-install-dismissed';
+  const DISMISS_DAYS = 7;
+
+  // L'app tourne-t-elle déjà en mode "installé" (standalone) ?
+  const isStandalone =
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true; // Safari iOS
+
+  // L'utilisateur a-t-il déjà fermé le bandeau récemment ?
+  const dismissedAt = parseInt(localStorage.getItem(DISMISS_KEY) || '0', 10);
+  const recentlyDismissed = Date.now() - dismissedAt < DISMISS_DAYS * 24 * 60 * 60 * 1000;
+
+  const ua = window.navigator.userAgent;
+  const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  const isAndroid = /Android/.test(ua);
+
+  let deferredPrompt = null;
+
+  function showBanner() {
+    if (isStandalone || recentlyDismissed) return;
+    requestAnimationFrame(() => banner.classList.add('is-visible'));
+  }
+
+  function hideBanner() {
+    banner.classList.remove('is-visible');
+  }
+
+  function dismiss() {
+    localStorage.setItem(DISMISS_KEY, String(Date.now()));
+    hideBanner();
+  }
+
+  closeBtn.addEventListener('click', dismiss);
+
+  if (isAndroid) {
+    // Android/Chrome : on attend l'évènement natif du navigateur pour
+    // savoir que l'installation est réellement possible.
+    bannerSub.innerHTML = 'Installez l\'app pour un accès rapide, même hors-ligne.';
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault(); // on bloque le mini-bandeau natif du navigateur
+      deferredPrompt = e;
+      showBanner();
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) { hideBanner(); return; }
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      hideBanner();
+    });
+
+    window.addEventListener('appinstalled', dismiss);
+
+  } else if (isIOS) {
+    // iPhone/iPad : pas d'évènement d'installation, on affiche directement
+    // les instructions manuelles et on masque le bouton "Installer".
+    bannerSub.innerHTML = 'Appuyez sur <strong>Partager</strong> puis <strong>« Sur l\'écran d\'accueil »</strong>.';
+    installBtn.style.display = 'none';
+    showBanner();
+  }
+  // Sur les autres plateformes (desktop, etc.) : on ne montre rien.
+})();
 
 // =====================================================================
 // 5. ENREGISTREMENT DU SERVICE WORKER (PWA)
